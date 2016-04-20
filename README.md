@@ -1,5 +1,5 @@
-# Fei-1 
-Configurable universal official web site (web app) for my friend (A Fei) and everyone.
+# ShackingBlog
+Configurable blog web app built with Mantra.
 
 ## Description
 - this is a: web app
