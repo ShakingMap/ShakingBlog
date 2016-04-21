@@ -10,6 +10,7 @@ import AppRoles from '../../lib/app-roles';
 import Toast from '../lib/toast';
 import SchemaReactiveDict from '../lib/schema-reactive-dict';
 import LocalStateSchema from './local-state-schema';
+import Constants from './constants'
 
 export default function () {
     return {
@@ -18,6 +19,7 @@ export default function () {
         FlowRouter,
         ActiveRoute,
         Collections,
+        Constants: Constants(),
         LocalState: new SchemaReactiveDict(LocalStateSchema()),
         Tracker,
         DocHead,
