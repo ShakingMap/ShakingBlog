@@ -32,18 +32,7 @@ With admin user logged in, you can manage the system (site, app, whatever) throu
 Note: by now, most of the settings are json objects or arrays of json objects. If you are not familiar with json,
 you should have a quick learning.
 
-Here is a list of what you can set: 
-
-- web.title - String
-- web.metas - array of html meta written as json object
-- web.links - array of html link written as json object, useful for adding styles without touching the source code
-- appbar.brand - {text, href}
-- appbar.links - array of {text, href}
-- footer.footer - {text, href, target}
-- indexPage.title - String
-- indexPage.carousel - array of {src, href, head, body}, all fields are String
-- indexPage.sectionA - array of {src, href}
-- indexPage.sectionB - array of {src, href}
+Here is a list of what you can set: todo
 
 ### Manage Posts
 You can create, update, publish/unpublish, remove posts through `/blog/admin` page.
@@ -58,7 +47,7 @@ I think it's a bad idea unless the image is small enough.
 - plan and develop more features
 - add settings doc
 
-- move disqus settings from settings.json to app state
+- support some chinese social comment system
 - support tag, sort, featured image, search
 - with featured image, index page can auto-generate content
 - optimize style
