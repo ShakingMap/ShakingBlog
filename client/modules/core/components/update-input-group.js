@@ -1,3 +1,8 @@
+/**
+ * 一个label，一个内容区域，一个更新按钮
+ * 支持props.value和props.checked，均为半受控属性
+ */
+
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
@@ -18,7 +23,7 @@ class Group extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (!this.props.compareValue(this.props.value, newProps.value)) {
+        if (!this.props.compare(this.props.value, newProps.value)) {
             this.setState({value: newProps.value})
         }
         if (newProps.checked !== this.props.checked) {
@@ -27,12 +32,13 @@ class Group extends React.Component {
     }
 
     render() {
-        const {ComponentClass, buttonText, compareValue, componentProps} = this.props;
+        const {buttonText, compare, componentProps} = this.props;
+        const ComponentClass = this.props.componentClass;
         const initValue = this.props.value;
         const initChecked = !!this.props.checked;
         const {value, checked} = this.state;
 
-        const different = !compareValue(initValue, value) || initChecked !== checked;
+        const different = !compare(initValue, value) || initChecked !== checked;
 
         return <div>
             <ComponentClass {...componentProps} {...{
@@ -61,7 +67,7 @@ class Group extends React.Component {
 
 Group.propTypes = {
     // input组件类，需要有value | checked和onChange
-    ComponentClass: React.PropTypes.any,
+    componentClass: React.PropTypes.any,
 
     // 传递给input component的参数
     componentProps: React.PropTypes.object,
@@ -76,7 +82,7 @@ Group.propTypes = {
     buttonText: React.PropTypes.string,
 
     // func(x, y)
-    compareValue: React.PropTypes.func
+    compare: React.PropTypes.func
 };
 
 Group.defaultProps = {
@@ -84,7 +90,7 @@ Group.defaultProps = {
     checked: false,
     onUpdate(){},
     buttonText: '更新',
-    compareValue: (x, y)=>x === y
+    compare: (x, y)=>x === y
 };
 
 export default Group

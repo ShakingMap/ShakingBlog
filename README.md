@@ -70,8 +70,7 @@ then, run app with settings.json file, such as `meteor --settings ./settings.jso
 - upload more docs
 - plan and develop more features
 
- 
-- build schema for appstate and appdata, auto-build admin page
+- support brand image
 - use tabs to organize admin page
 - move disqus settings from settings.json to app state
 - support tag, sort, featured image, search

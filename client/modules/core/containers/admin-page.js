@@ -2,6 +2,7 @@ import {composeWithTracker, composeAll, useDeps} from 'mantra-core';
 import AdminPage from '../components/admin-page';
 import _ from 'lodash';
 import adminOnly from '../high-order/admin-only';
+import Const from '../constants';
 
 export const composer = ({context, actions}, onData)=> {
     const {Meteor, Collections, Toast, FlowRouter} = context();
@@ -24,8 +25,35 @@ export const composer = ({context, actions}, onData)=> {
         return _.get(AppData.findOne({_id: key}), 'value', defaultValue);
     }
 
-    if (stateSub.ready() && dataSub.ready()) {
-        function normalUpdateCallback(err) {
+    function parseJSON(value, callback) {
+        try {
+            const parsed = JSON.parse(value);
+            callback(parsed);
+        }
+        catch (err) {
+            Toast.error('JSON格式错误。');
+        }
+    }
+
+    function getItemValue(item) {
+        let value;
+        if (item.source === 'AppState') {
+            value = getAppState(item.key);
+        }
+        else if (item.source === 'AppData') {
+            value = getAppData(item.key)
+        }
+        else throw new Error('wrong source');
+
+        if (item.type === 'array' || item.type === 'object') {
+            value = JSON.stringify(value, null, 4);
+        }
+
+        return value;
+    }
+
+    function updateItem(item, key, value) {
+        Meteor.call(`core.set${item.source}`, {key, value}, (err)=> {
             if (err) {
                 if (err.error === 'no-permission') {
                     Toast.error('权限不足。');
@@ -38,60 +66,32 @@ export const composer = ({context, actions}, onData)=> {
             else {
                 Toast.success('更新成功。', {timeout: 'flash'})
             }
-        }
+        })
+    }
 
-        function parseJSON(value, callback) {
-            try {
-                const parsed = JSON.parse(value);
-                callback(parsed);
-            }
-            catch (err) {
-                Toast.error('JSON格式错误。');
-            }
-        }
-
+    if (stateSub.ready() && dataSub.ready()) {
         onData(null, {
-            blogAdminPagePath: FlowRouter.path('blog.admin'),
-            title: getAppState('title', ''),
-            onUpdateTitle: (title)=> {
-                Meteor.call('core.setAppState', {key: 'title', value: title}, normalUpdateCallback)
-            },
-            indexPageTitle: getAppData('indexPageTitle', ''),
-            onUpdateIndexPageTitle: (indexPageTitle)=> {
-                Meteor.call('core.setAppData', {key: 'indexPageTitle', value: indexPageTitle}, normalUpdateCallback)
-            },
-            metas: JSON.stringify(getAppState('metas', []), null, 4),
-            onUpdateMetas: (value)=> parseJSON(value, (value)=> {
-                Meteor.call('core.setAppState', {key: 'metas', value: value}, normalUpdateCallback)
-            }),
-            links: JSON.stringify(getAppState('links', []), null, 4),
-            onUpdateLinks: (value)=> parseJSON(value, (value)=> {
-                Meteor.call('core.setAppState', {key: 'links', value: value}, normalUpdateCallback)
-            }),
-            appbarBrand: JSON.stringify(getAppState('appbarBrand', {}), null, 4),
-            onUpdateAppbarBrand: (value)=> parseJSON(value, (value)=> {
-                Meteor.call('core.setAppState', {key: 'appbarBrand', value: value}, normalUpdateCallback)
-            }),
-            appbarLinks: JSON.stringify(getAppState('appbarLinks', []), null, 4),
-            onUpdateAppbarLinks: (value)=> parseJSON(value, (value)=> {
-                Meteor.call('core.setAppState', {key: 'appbarLinks', value: value}, normalUpdateCallback)
-            }),
-            footer: JSON.stringify(getAppState('footer', {}), null, 4),
-            onUpdateFooter: (value)=> parseJSON(value, (value)=> {
-                Meteor.call('core.setAppState', {key: 'footer', value: value}, normalUpdateCallback)
-            }),
-            indexPageCarousel: JSON.stringify(getAppData('indexPageCarousel', []), null, 4),
-            onUpdateIndexPageCarousel: (value)=> parseJSON(value, (options)=> {
-                Meteor.call('core.setAppData', {key: 'indexPageCarousel', value: options}, normalUpdateCallback)
-            }),
-            indexPageSectionA: JSON.stringify(getAppData('indexPageSectionA', []), null, 4),
-            onUpdateIndexPageSectionA: (value)=> parseJSON(value, (options)=> {
-                Meteor.call('core.setAppData', {key: 'indexPageSectionA', value: options}, normalUpdateCallback)
-            }),
-            indexPageSectionB: JSON.stringify(getAppData('indexPageSectionB', []), null, 4),
-            onUpdateIndexPageSectionB: (value)=> parseJSON(value, (options)=> {
-                Meteor.call('core.setAppData', {key: 'indexPageSectionB', value: options}, normalUpdateCallback)
-            })
+            links: [
+                {text: '管理文章', href: FlowRouter.path('blog.admin')}
+            ],
+            sections: _(Const.appSettingsSchema).groupBy('class').map((items, clazz)=> {
+                return {
+                    name: clazz,
+                    items: _.map(items, (item)=> {
+                        return {
+                            name: item.label,
+                            type: item.type,
+                            value: getItemValue(item),
+                            onUpdate: (value)=> {
+                                if (item.type === 'object' || item.type === 'array') {
+                                    parseJSON(value, (value)=>updateItem(item, item.key, value));
+                                }
+                                else updateItem(item, item.key, value)
+                            }
+                        }
+                    })
+                }
+            }).value()
         });
     }
     else {

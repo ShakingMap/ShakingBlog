@@ -4,6 +4,7 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "autosize": "^3.0.15",
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.3",
     "jquery-inview": "^1.1.2",
@@ -14,7 +15,7 @@
     "moment": "^2.13.0",
     "prosemirror": "^0.5.1",
     "react": "^0.14.8",
-    "react-bootstrap": "^0.29.0",
+    "react-bootstrap": "^0.29.1",
     "react-disqus-thread": "^0.3.1",
     "react-dom": "^0.14.8",
     "react-mounter": "^1.2.0",
