@@ -69,9 +69,8 @@ then, run app with settings.json file, such as `meteor --settings ./settings.jso
 - deploy a demo site
 - upload more docs
 - plan and develop more features
+- add settings doc
 
-- support brand image
-- use tabs to organize admin page
 - move disqus settings from settings.json to app state
 - support tag, sort, featured image, search
 - with featured image, index page can auto-generate content

@@ -2,13 +2,18 @@ import React from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap'
 
 export default ({
-    brand = {}, // {text, href}
+    brand = {}, // {text, src, href}
     links = [], // [{text, href, active}]
     })=> {
     return <Navbar fixedTop={true}>
         <Navbar.Header>
             <Navbar.Brand>
-                <a href={brand.href}>{brand.text}</a>
+                {
+                    brand.src ?
+                        <a href={brand.href} style={{padding: 0}}><img src={brand.src} style={{height: '50px'}}/></a>
+                        :
+                        <a href={brand.href}>{brand.text}</a>
+                }
             </Navbar.Brand>
             <Navbar.Toggle />
         </Navbar.Header>

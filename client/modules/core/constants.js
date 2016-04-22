@@ -30,7 +30,7 @@ export default {
             label: 'Brand',
             source: 'AppState',
             key: 'appbarBrand',
-            type: 'object' // {text, href}
+            type: 'object' // {text, src, href}
         },
         {
             class: '导航栏',
