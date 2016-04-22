@@ -10,17 +10,17 @@ import _ from 'lodash';
 export default function () {
     Tracker.autorun(()=> {
         DocHead.removeDocHeadAddedTags();
-        DocHead.setTitle(getValue('title'));
-        _.forEach(getValue('metas'), (meta)=> {
+        DocHead.setTitle(getAppState('title'));
+        _.forEach(getAppState('metas'), (meta)=> {
             DocHead.addMeta(meta);
         });
-        _.forEach(getValue('links'), (link)=>{
+        _.forEach(getAppState('links'), (link)=>{
             DocHead.addLink(link);
         })
     });
 }
 
-function getValue(id) {
+function getAppState(id) {
     const doc = AppState.findOne({_id: id});
     return doc && doc.value;
 }

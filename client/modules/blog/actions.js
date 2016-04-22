@@ -1,12 +1,14 @@
+import Const from './constants'
+
 export default {
     blog: {
-        resetListPostsPageLoadLimit({LocalState, Constants}) {
-            LocalState.set('blog.ListPostsPage.loadLimit', Constants.blog.listPostsPageLoadLimitStep);
+        resetListPostsPageLoadLimit({LocalState}) {
+            LocalState.set('blog.ListPostsPage.loadLimit', Const.listPostsPageLoadLimitStep);
         },
 
-        incListPostsPageLoadLimit({LocalState, Constants}) {
+        incListPostsPageLoadLimit({LocalState}) {
             const loadLimit = LocalState.get('blog.ListPostsPage.loadLimit');
-            LocalState.set('blog.ListPostsPage.loadLimit', loadLimit + Constants.blog.listPostsPageLoadLimitStep);
+            LocalState.set('blog.ListPostsPage.loadLimit', loadLimit + Const.listPostsPageLoadLimitStep);
         },
 
         setListPostsPageScrollTop({LocalState}, scrollTop) {
@@ -17,13 +19,13 @@ export default {
             LocalState.delete('blog.ListPostsPage.scrollTop')
         },
 
-        resetBlogAdminPageLoadLimit({LocalState, Constants}) {
-            LocalState.set('blog.BlogAdminPage.loadLimit', Constants.blog.blogAdminPageLoadLimitStep);
+        resetBlogAdminPageLoadLimit({LocalState}) {
+            LocalState.set('blog.BlogAdminPage.loadLimit', Const.blogAdminPageLoadLimitStep);
         },
 
-        incBlogAdminPageLoadLimit({LocalState, Constants}) {
+        incBlogAdminPageLoadLimit({LocalState}) {
             const loadLimit = LocalState.get('blog.BlogAdminPage.loadLimit');
-            LocalState.set('blog.BlogAdminPage.loadLimit', loadLimit + Constants.blog.blogAdminPageLoadLimitStep);
+            LocalState.set('blog.BlogAdminPage.loadLimit', loadLimit + Const.blogAdminPageLoadLimitStep);
         },
 
         setBlogAdminPageScrollTop({LocalState}, scrollTop) {

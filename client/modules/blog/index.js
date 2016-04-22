@@ -1,11 +1,11 @@
 import routes from './routes'
 import actions from './actions';
-import initState from './configs/state';
+import initLocalState from './configs/local-state';
 
 export default {
     routes,
     actions,
     load(context) {
-        initState(context);
+        initLocalState(context);
     }
 }

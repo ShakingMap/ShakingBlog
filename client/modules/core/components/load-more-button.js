@@ -10,7 +10,7 @@ class Component extends React.Component {
         const onInview = loadMoreOnInview ? this.onInview.bind(this) : null;
 
         return <Inview onInview={onInview} {...wrapperProps}>
-            <Button disabled={disabled} onClick={onLoadMore} {...otherProps}>{text}</Button>
+            <Button disabled={disabled} onClick={()=>onLoadMore()} {...otherProps}>{text}</Button>
         </Inview>
     }
 

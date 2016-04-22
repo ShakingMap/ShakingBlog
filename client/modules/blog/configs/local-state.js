@@ -1,10 +1,12 @@
-export default function ({LocalState, Constants}) {
+import Const from '../constants';
+
+export default function ({LocalState}) {
     // ListPosts页面文章加载数目
     // blog.ListPostsPage.loadLimit
     LocalState.extendSchema({
         'blog.ListPostsPage.loadLimit': Number
     });
-    LocalState.set('blog.ListPostsPage.loadLimit', Constants.blog.listPostsPageLoadLimitStep);
+    LocalState.set('blog.ListPostsPage.loadLimit', Const.listPostsPageLoadLimitStep);
 
     // ListPosts页面初始滚动位置
     // blog.ListPostsPage.scrollTop
@@ -17,7 +19,7 @@ export default function ({LocalState, Constants}) {
     LocalState.extendSchema({
         'blog.BlogAdminPage.loadLimit': Number
     });
-    LocalState.set('blog.BlogAdminPage.loadLimit', Constants.blog.blogAdminPageLoadLimitStep);
+    LocalState.set('blog.BlogAdminPage.loadLimit', Const.blogAdminPageLoadLimitStep);
 
     // BlogAdmin页面初始滚动位置
     // blog.BlogAdminPage.scrollTop
