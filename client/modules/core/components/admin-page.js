@@ -29,31 +29,35 @@ class Page extends React.Component {
                 )
             }
             <hr/>
-            <Tabs defaultActiveKey={0} id={Random.id()} animation={false} onSelect={this.triggerAutosize.bind(this)}>
-                {
-                    _.map(sections, (section, index) =>
-                        <Tab key={index} eventKey={index} title={section.name} style={{marginTop: '20px'}}>
-                            {
-                                _.map(section.items, (item, index)=>
-                                    <FormGroup key={index}>
-                                        <ControlLabel>{item.name}</ControlLabel>
-                                        <UpdateInputGroup {...{
-                                            componentClass: FormControl,
-                                            componentProps: item.type === 'string' ? undefined : {
-                                                componentClass: 'textarea',
-                                                style: {resize: 'vertical'}
-                                            },
-                                            value: item.value || (item.type === 'array' ? '[]' : item.type === 'object' ? '{}' : ''),
-                                            onUpdate: ({value})=>item.onUpdate(value),
-                                            compare: item.type === 'string' ? undefined : ClientUtils.compareJSON
-                                        }}/>
-                                    </FormGroup>
-                                )
-                            }
-                        </Tab>
-                    )
-                }
-            </Tabs>
+            {
+                sections && sections.length ?
+                    <Tabs defaultActiveKey={0} id={Random.id()} animation={false}
+                          onSelect={this.triggerAutosize.bind(this)}>
+                        {
+                            _.map(sections, (section, index) =>
+                                <Tab key={index} eventKey={index} title={section.name} style={{marginTop: '20px'}}>
+                                    {
+                                        _.map(section.items, (item, index)=>
+                                            <FormGroup key={index}>
+                                                <ControlLabel>{item.name}</ControlLabel>
+                                                <UpdateInputGroup {...{
+                                                    componentClass: FormControl,
+                                                    componentProps: item.type === 'string' ? undefined : {
+                                                        componentClass: 'textarea',
+                                                        style: {resize: 'vertical'}
+                                                    },
+                                                    value: item.value || (item.type === 'array' ? '[]' : item.type === 'object' ? '{}' : ''),
+                                                    onUpdate: ({value})=>item.onUpdate(value),
+                                                    compare: item.type === 'string' ? undefined : ClientUtils.compareJSON
+                                                }}/>
+                                            </FormGroup>
+                                        )
+                                    }
+                                </Tab>
+                            )
+                        }
+                    </Tabs> : null
+            }
         </Container>
     }
 

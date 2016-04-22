@@ -76,14 +76,14 @@ export default {
             label: '区域A',
             source: 'AppData',
             key: 'indexPageSectionA',
-            type: 'array' // [{src, href}] - 建议1~2个16:9
+            type: 'array' // [{src, href}] - 建议2个
         },
         {
             class: '首页',
             label: '区域A',
             source: 'AppData',
             key: 'indexPageSectionB',
-            type: 'array' // [{src, href}] - 建议4或8个1:1
+            type: 'array' // [{src, href}] - 建议4个
         }
     ]
 

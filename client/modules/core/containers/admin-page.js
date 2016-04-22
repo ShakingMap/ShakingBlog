@@ -95,7 +95,7 @@ export const composer = ({context, actions}, onData)=> {
         });
     }
     else {
-        onData();
+        onData(null, {});
     }
 };
 

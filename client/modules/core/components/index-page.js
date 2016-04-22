@@ -15,7 +15,10 @@ const Page = ({
 
     return <div>
         <Container>
-            <PageHeader>{indexPageTitle}</PageHeader>
+            {
+                indexPageTitle ?
+                    <PageHeader>{indexPageTitle}</PageHeader> : null
+            }
             {
                 isNonEmptyArray(indexPageCarousel) ?
                     <Carousel>
@@ -34,9 +37,9 @@ const Page = ({
             }
             {
                 isNonEmptyArray(indexPageSectionA) ?
-                    <Row>
+                    <Row style={{margin:0}}>
                         {
-                            indexPageSectionA.map((item, index)=> <Col xs={12} key={index}>
+                            indexPageSectionA.map((item, index)=> <Col xs={12} sm={6} key={index} style={{padding:0}}>
                                 <a href={item.href}><img className="full-width" src={item.src}/></a>
                             </Col>)
                         }
