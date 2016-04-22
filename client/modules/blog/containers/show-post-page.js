@@ -1,6 +1,7 @@
-import {useDeps} from 'mantra-core';
+import {useDeps, composeWithTracker, composeAll} from 'mantra-core';
 import React from 'react';
 import ShowPostPage from '../components/show-post-page';
+import _ from 'lodash';
 
 class Page extends React.Component {
     constructor(props) {
@@ -13,9 +14,10 @@ class Page extends React.Component {
     }
 
     render() {
-        const {context} = this.props;
+        const {context, disqus} = this.props;
         const {post, error, noPost, loading} = this.state;
-        const {Meteor} = context();
+        const {Collections} = context();
+        const AppState = Collections.AppState;
 
         if (error) {
             return <div>{error}</div>
@@ -28,7 +30,7 @@ class Page extends React.Component {
         //}
         return <ShowPostPage {...{
             post,
-            disqus: Meteor.settings.public.disqus
+            disqus
         }}/>
     }
 
@@ -53,7 +55,8 @@ class Page extends React.Component {
 }
 
 Page.propTypes = {
-    postId: React.PropTypes.string.isRequired
+    postId: React.PropTypes.string.isRequired,
+    disqus: React.PropTypes.object
 };
 
 Page.defaultState = {
@@ -63,4 +66,14 @@ Page.defaultState = {
     loading: false
 };
 
-export default useDeps()(Page);
+export const composer = function (props, onData) {
+    const {AppState} = props.context().Collections;
+    onData(null, _.extend({
+        disqus: _.get(AppState.findOne({_id: 'disqus'}), 'value')
+    }, props));
+};
+
+export default composeAll(
+    composeWithTracker(composer),
+    useDeps()
+)(Page)

@@ -52,19 +52,6 @@ Note: to make this app 'lite', it doesn't support file storage by now. So you wi
 in some other places, and refer to them through url in your posts. Though you may use base64 to embed image into text,
 I think it's a bad idea unless the image is small enough.
 
-### Support Disqus
-To support Disqus comments for your posts, you need a settings.json file config-ed as below:
-
-```
-"public": {
-    "disqus": {
-      "shortname": YOUR_DISQUS_SHORTNAME
-    }
-  }
-```
-
-then, run app with settings.json file, such as `meteor --settings ./settings.json`
-
 ## Todo
 - deploy a demo site
 - upload more docs

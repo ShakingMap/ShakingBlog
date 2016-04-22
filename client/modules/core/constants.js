@@ -23,6 +23,13 @@ export default {
             key: 'links',
             type: 'array' // 每一项是一个html link
         },
+        {
+            class: '网站',
+            label: 'Disqus',
+            source: 'AppState',
+            key: 'disqus',
+            type: 'object' // {shortname}
+        },
 
         // 导航栏
         {
