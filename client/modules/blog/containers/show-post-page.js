@@ -35,7 +35,7 @@ class Page extends React.Component {
     }
 
     loadPost(postId) {
-        const {context} = this.props;
+        const {context, actions} = this.props;
         const {Meteor} = context();
         this.setState({loading: true});
         Meteor.call('posts.get', {id: postId}, (err, post)=> {
@@ -48,7 +48,8 @@ class Page extends React.Component {
                 this.setState({noPost: true});
             }
             else {
-                this.setState({post})
+                this.setState({post});
+                actions().core.setSubTitle(post.title);
             }
         });
     }
